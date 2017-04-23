@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Black : MonoBehaviour
+public class DeathOnTouch : MonoBehaviour
 {
     /// <summary>
     /// OnCollisionEnter is called when this collider/rigidbody has begun
@@ -9,9 +9,8 @@ public class Black : MonoBehaviour
     /// <param name="other">The Collision data associated with this collision.</param>
     void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.name == "Player")
-        {
-            other.gameObject.GetComponent<PlayerController>().OnDead();
-        }
+        PlayerController player = other.gameObject.GetComponent<PlayerController>();
+        if (player != null)
+            player.OnDead();
     }
 }
