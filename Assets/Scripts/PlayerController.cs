@@ -8,17 +8,25 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rigidbody;
 
     // 控制参数
+    // 前进速度
+    public float velocity = 10.0f;
     // 横向移动冲量
     public float horizontalImpluse = 1.0f;
+    // 反弹力度
     public float bounceLevel = 1.0f;
+    // 反弹后恢复速度时间
+    public float bounceRecoverTime = 0.5f;
 
     // 状态
     private bool _alive = true;
 
     void Start()
     {
+        // 获取组件
         _rigidbody = GetComponent<Rigidbody>();
-        Velocity = Vector3.forward * 10.0f;
+
+        // 初始化速度
+        Velocity = Vector3.forward * velocity;
     }
 
     void Update()
@@ -29,6 +37,23 @@ public class PlayerController : MonoBehaviour
                 _rigidbody.AddForce(Vector3.left * horizontalImpluse * _rigidbody.mass, ForceMode.Impulse);
             else if (Input.GetKey("d"))
                 _rigidbody.AddForce(Vector3.right * horizontalImpluse * _rigidbody.mass, ForceMode.Impulse);
+        }
+    }
+
+    private float _bounceCountDown = -1.0f;
+    void FixedUpdate()
+    {
+        if (_bounceCountDown != -1.0f)
+        {
+            if (_bounceCountDown < 0.0f)
+            {
+                Velocity = Vector3.forward * velocity;
+                _bounceCountDown = -1.0f;
+            }
+            else
+            {
+                _bounceCountDown -= Time.fixedDeltaTime;
+            }
         }
     }
 
@@ -48,6 +73,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "Bounce")
         {
             _rigidbody.AddForce(-other.impulse * bounceLevel, ForceMode.Impulse);
+            _bounceCountDown = bounceRecoverTime;
         }
     }
 
