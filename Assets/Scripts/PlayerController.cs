@@ -8,16 +8,27 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rigidbody;
 
     // 控制参数
-    // 前进速度
-    public float velocity = 10.0f;
+    // 前进基准速度
+    public const float baseSpeed = 10.0f;
     // 横向移动冲量
     public float horizontalImpluse = 1.0f;
-    // 反弹力度
-    public float bounceLevel = 1.0f;
-    // 反弹后恢复速度时间
-    public float bounceRecoverTime = 0.5f;
+
+    // 属性
+    // 速度属性
+    public float Speed
+    {
+        get { return _speed; }
+        set { _speed = value; }
+    }
+    // 方向属性
+    public Vector3 Direction
+    {
+        get { return _rigidbody.velocity.normalized; }
+        set { _rigidbody.velocity = value.normalized * _speed; }
+    }
 
     // 状态
+    private float _speed = baseSpeed;
     private bool _alive = true;
 
     void Start()
@@ -25,8 +36,8 @@ public class PlayerController : MonoBehaviour
         // 获取组件
         _rigidbody = GetComponent<Rigidbody>();
 
-        // 初始化速度
-        Velocity = Vector3.forward * velocity;
+        // 初始化方向
+        Direction = Vector3.forward;
     }
 
     void Update()
@@ -40,41 +51,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private float _bounceCountDown = -1.0f;
-    void FixedUpdate()
-    {
-        if (_bounceCountDown != -1.0f)
-        {
-            if (_bounceCountDown < 0.0f)
-            {
-                Velocity = Vector3.forward * velocity;
-                _bounceCountDown = -1.0f;
-            }
-            else
-            {
-                _bounceCountDown -= Time.fixedDeltaTime;
-            }
-        }
-    }
-
-    public Vector3 Velocity
-    {
-        get { return _rigidbody.velocity; }
-        set { _rigidbody.velocity = value; }
-    }
-
     public void OnDead()
     {
         _alive = false;
-    }
-
-    void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.tag == "Bounce")
-        {
-            _rigidbody.AddForce(-other.impulse * bounceLevel, ForceMode.Impulse);
-            _bounceCountDown = bounceRecoverTime;
-        }
     }
 
     void OnGUI()
