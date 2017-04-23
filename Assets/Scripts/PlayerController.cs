@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 
     // 控制参数
     // 前进基准速度
-    public const float baseSpeed = 10.0f;
+    public float baseSpeed = 10.0f;
     // 横向移动冲量
     public float horizontalImpluse = 1.0f;
 
@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // 状态
-    private float _speed = baseSpeed;
+    private float _speed;
     private bool _alive = true;
 
     void Start()
@@ -36,7 +36,8 @@ public class PlayerController : MonoBehaviour
         // 获取组件
         _rigidbody = GetComponent<Rigidbody>();
 
-        // 初始化方向
+        // 初始化
+        _speed = baseSpeed;
         Direction = Vector3.forward;
     }
 
