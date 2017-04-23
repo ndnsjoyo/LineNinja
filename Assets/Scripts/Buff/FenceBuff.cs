@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class Bouncer : MonoBehaviour
+public class FenceBuff : MonoBehaviour
 {
-    void OnCollisionEnter(Collision other)
+    void OnTriggerEnter(Collider other)
     {
         PlayerController player = other.gameObject.GetComponent<PlayerController>();
         if (player != null && player.IsAlive)
         {
-            player.Direction = -other.impulse;
+            Debug.Log("栅栏跳跃");
+            player.OnJump();
         }
     }
 }
