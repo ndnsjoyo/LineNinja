@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     void OnGUI()
     {
         // 显示速度
-        GUI.Label(new Rect(10, 10, 100, 20), _rigidbody.velocity.ToString());
+        GUI.Label(new Rect(10, 10, 100, 20), _rigidbody.velocity.magnitude.ToString());
     }
 
     void Start()
