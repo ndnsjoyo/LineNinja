@@ -4,17 +4,98 @@ using UnityEngine;
 
 public class WaypointFollower : MonoBehaviour
 {
-    public Transform[] waypoints;
+    public WaypointGroup waypointGroup;
 
-    // Use this for initialization
+    // router
+    public enum RouteType
+    {
+        ONCE,
+        CIRCULAR,
+        RETURN
+    }
+    public RouteType routeType = RouteType.ONCE;
+    private Vector3[] waypoints;
+    private int nextWaypoint = -1;
+    public int initDirection = 1;
+
+    // movement controller
+    public bool moving = true;
+    public float movingSpeed = 1.0f;
+
     void Start()
     {
-
+        waypoints = waypointGroup.Waypoints;
+        float minDist = float.PositiveInfinity;
+        for (int i = 0; i < waypoints.Length; i++)
+        {
+            float dist = (transform.position - waypoints[i]).magnitude;
+            if (dist < minDist)
+            {
+                minDist = dist;
+                nextWaypoint = i;
+            }
+        }
+        LookAtNextWaypoint();
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        if (moving)
+        {
+            transform.Translate(Vector3.forward * movingSpeed * Time.fixedDeltaTime);
+            // Debug.Log((transform.position - waypoints[nextWaypoint]).magnitude);
 
+            if ((transform.position - waypoints[nextWaypoint]).magnitude < 0.5f)
+            {
+                nextWaypoint = GetNextWaypoint();
+                if (nextWaypoint == -1)
+                {
+                    moving = false;
+                    return;
+                }
+                LookAtNextWaypoint();
+            }
+        }
+    }
+
+    int GetNextWaypoint()
+    {
+        switch (routeType)
+        {
+            case RouteType.ONCE:
+                if (0 < nextWaypoint && nextWaypoint < waypoints.Length - 1)
+                {
+                    return nextWaypoint + initDirection;
+                }
+                break;
+            case RouteType.CIRCULAR:
+                if (nextWaypoint == waypoints.Length - 1 && initDirection == 1)
+                {
+                    return 0;
+                }
+                else if (nextWaypoint == 0 && initDirection == -1)
+                {
+                    return waypoints.Length - 1;
+                }
+                else
+                {
+                    return nextWaypoint + initDirection;
+                }
+            case RouteType.RETURN:
+                if ((nextWaypoint == waypoints.Length - 1 && initDirection == 1)
+                || (nextWaypoint == 0 && initDirection == -1))
+                {
+                    initDirection *= -1;
+                }
+                return nextWaypoint + initDirection;
+            default:
+                break;
+        }
+        return -1;
+    }
+
+    void LookAtNextWaypoint()
+    {
+        transform.rotation = Quaternion.LookRotation(waypoints[nextWaypoint] - transform.position);
     }
 }
