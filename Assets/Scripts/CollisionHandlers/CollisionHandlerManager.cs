@@ -5,18 +5,30 @@ using UnityEngine;
 
 public class CollisionHandlerManager : MonoBehaviour
 {
+    public GameObject managedObject;
+
+    static private Type[] buffCtorParamTypes;
+    static CollisionHandlerManager()
+    {
+        buffCtorParamTypes = new Type[] { typeof(GameObject) };
+    }
+
     public string[] handlers;
     private List<CollisionHandler> _handlers;
 
     void Awake()
     {
+        if (managedObject == null)
+            managedObject = gameObject;
+
         _handlers = new List<CollisionHandler>();
 
-        foreach (string buffName in handlers)
+        foreach (string handlerName in handlers)
         {
-            Type buffType = Type.GetType(buffName + "CollisionHandler");
-            CollisionHandler buff = Activator.CreateInstance(buffType) as CollisionHandler;
-            _handlers.Add(buff);
+            Type buffType = Type.GetType(handlerName + "CollisionHandler");
+            ConstructorInfo buffCtor = buffType.GetConstructor(buffCtorParamTypes);
+            CollisionHandler handler = buffCtor.Invoke(new[] { managedObject }) as CollisionHandler;
+            _handlers.Add(handler);
         }
     }
 
