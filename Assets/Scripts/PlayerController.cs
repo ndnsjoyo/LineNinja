@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // 状态
+    private float _speed;
     private bool _alive = true;
     private float _jumpStartZ = float.PositiveInfinity;
 
@@ -109,3 +110,4 @@ public class PlayerController : MonoBehaviour
         Speed /= 1.5f;
     }
 }
+
