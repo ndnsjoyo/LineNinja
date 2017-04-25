@@ -4,11 +4,36 @@ using UnityEngine;
 
 public class JumpingPlayerState : PlayerState
 {
-    public JumpingPlayerState(PlayerController player) : base(player) { }
+    static readonly private float jumpingHeight = 2.5f;
+    static readonly private float jumpingDistance = 7.0f;
+
+    private float startZ = 0.0f;
+
+    public JumpingPlayerState(PlayerController player) : base(player)
+    {
+        startZ = player.transform.position.z;
+    }
 
     public override void Enter()
     {
         Debug.Log("起跳");
-        player.Rigidbody.AddForce(Vector3.up * 7.5f, ForceMode.Impulse);
+        player.Rigidbody.AddForce(Vector3.up * 10f, ForceMode.Impulse);
+    }
+
+    public override void Update()
+    {
+        if (player.transform.position.y > jumpingHeight)
+        {
+            Vector3 velocity = player.Rigidbody.velocity;
+            velocity.y = 0.0f;
+            player.Rigidbody.velocity = velocity;
+
+            player.Rigidbody.useGravity = false;
+        }
+
+        if (player.transform.position.z > startZ + jumpingDistance)
+        {
+            player.Rigidbody.useGravity = true;
+        }
     }
 }

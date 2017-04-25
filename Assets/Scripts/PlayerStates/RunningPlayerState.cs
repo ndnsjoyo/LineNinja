@@ -9,6 +9,6 @@ public class RunningPlayerState : PlayerState
     public override void Enter()
     {
         Debug.Log("开始奔跑");
-        player.Rigidbody.velocity = Vector3.forward * player.baseSpeed;
+        player.Rigidbody.velocity = player.Rigidbody.velocity.normalized * player.baseSpeed;
     }
 }
