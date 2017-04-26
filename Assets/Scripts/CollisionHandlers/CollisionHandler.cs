@@ -6,10 +6,10 @@ namespace CollisionHandler
 {
     public class Handler : UnityEngine.Object
     {
-        protected GameObject gameObject;
-        public Handler(GameObject gameObject)
+        protected CollisionHandlerManager manager;
+        public Handler(CollisionHandlerManager manager)
         {
-            this.gameObject = gameObject;
+            this.manager = manager;
         }
 
         public virtual void OnEnter(PlayerController player) { }

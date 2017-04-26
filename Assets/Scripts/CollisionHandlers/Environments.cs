@@ -4,7 +4,7 @@ namespace CollisionHandler
 {
     public class Ground : Handler
     {
-        public Ground(GameObject gameObject) : base(gameObject) { }
+        public Ground(CollisionHandlerManager manager) : base(manager) { }
         public override void OnEnter(PlayerController player)
         {
             if (player.State.GetType() == typeof(PlayerState.Jumping))
@@ -17,7 +17,7 @@ namespace CollisionHandler
 
     public class Pool : Handler
     {
-        public Pool(GameObject gameObject) : base(gameObject) { }
+        public Pool(CollisionHandlerManager manager) : base(manager) { }
         public override void OnEnter(PlayerController player)
         {
             Debug.Log("水池 进入");

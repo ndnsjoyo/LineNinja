@@ -25,6 +25,25 @@ public class PlayerController : MonoBehaviour
         get { return _state.GetType() != typeof(PlayerState.Dead); }
     }
 
+    // 刀
+    private bool _withKatana = false;
+    public bool WithKatana
+    {
+        get { return _withKatana; }
+        set
+        {
+            if (value)
+            {
+                Debug.Log("装备刀");
+            }
+            else
+            {
+                Debug.Log("消耗刀");
+            }
+            _withKatana = value;
+        }
+    }
+
     void Start()
     {
         // 获取组件

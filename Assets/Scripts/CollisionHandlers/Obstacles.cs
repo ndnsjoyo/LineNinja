@@ -4,7 +4,7 @@ namespace CollisionHandler
 {
     public class House : Handler
     {
-        public House(GameObject gameObject) : base(gameObject) { }
+        public House(CollisionHandlerManager manager) : base(manager) { }
         public override void OnEnter(PlayerController player)
         {
             Debug.Log("房屋");
@@ -13,7 +13,7 @@ namespace CollisionHandler
 
     public class Deadly : Handler
     {
-        public Deadly(GameObject gameObject) : base(gameObject) { }
+        public Deadly(CollisionHandlerManager manager) : base(manager) { }
         public override void OnEnter(PlayerController player)
         {
             Debug.Log("致命");
@@ -26,7 +26,7 @@ namespace CollisionHandler
 
     public class Jump : Handler
     {
-        public Jump(GameObject gameObject) : base(gameObject) { }
+        public Jump(CollisionHandlerManager manager) : base(manager) { }
         public override void OnEnter(PlayerController player)
         {
             Debug.Log("跳跃");
@@ -39,13 +39,14 @@ namespace CollisionHandler
 
     public class Killable : Handler
     {
-        public Killable(GameObject gameObject) : base(gameObject) { }
+        public Killable(CollisionHandlerManager manager) : base(manager) { }
         public override void OnEnter(PlayerController player)
         {
             Debug.Log("击杀");
             if (player.IsAlive)
             {
-                Destroy(gameObject);
+                manager.destroyed = true;
+                Destroy(manager);
             }
         }
     }

@@ -12,11 +12,13 @@ namespace CollisionHandler
         static private Type[] buffCtorParamTypes;
         static CollisionHandlerManager()
         {
-            buffCtorParamTypes = new Type[] { typeof(GameObject) };
+            buffCtorParamTypes = new Type[] { typeof(CollisionHandlerManager) };
         }
 
         public string[] handlers;
         private List<Handler> _handlers;
+
+        public bool destroyed = false;
 
         void Awake()
         {
@@ -29,7 +31,7 @@ namespace CollisionHandler
             {
                 Type buffType = Type.GetType("CollisionHandler." + handlerName);
                 ConstructorInfo buffCtor = buffType.GetConstructor(buffCtorParamTypes);
-                Handler handler = buffCtor.Invoke(new[] { managedObject }) as Handler;
+                Handler handler = buffCtor.Invoke(new[] { this }) as Handler;
                 _handlers.Add(handler);
             }
         }
@@ -42,6 +44,7 @@ namespace CollisionHandler
                 foreach (var buff in _handlers)
                 {
                     buff.OnEnter(player);
+                    if (destroyed) break;
                 }
             }
         }
@@ -54,6 +57,7 @@ namespace CollisionHandler
                 foreach (var buff in _handlers)
                 {
                     buff.OnStay(player);
+                    if (destroyed) break;
                 }
             }
         }
@@ -66,6 +70,7 @@ namespace CollisionHandler
                 foreach (var buff in _handlers)
                 {
                     buff.OnExit(player);
+                    if (destroyed) break;
                 }
             }
         }
@@ -78,6 +83,7 @@ namespace CollisionHandler
                 foreach (var buff in _handlers)
                 {
                     buff.OnEnter(player);
+                    if (destroyed) break;
                 }
             }
         }
@@ -90,6 +96,7 @@ namespace CollisionHandler
                 foreach (var buff in _handlers)
                 {
                     buff.OnStay(player);
+                    if (destroyed) break;
                 }
             }
         }
@@ -102,6 +109,7 @@ namespace CollisionHandler
                 foreach (var buff in _handlers)
                 {
                     buff.OnExit(player);
+                    if (destroyed) break;
                 }
             }
         }
