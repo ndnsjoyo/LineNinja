@@ -32,6 +32,7 @@ public class TouchMesh : MonoBehaviour
     void Awake()
     {
         fingerManager = FingerManager.instance;
+      
     }
     void Start()
     {
@@ -66,6 +67,7 @@ public class TouchMesh : MonoBehaviour
     void OnFingerDown(FingerDownEvent e)
     {
         touchPosition.Add((Vector2)e.Position);
+        print(touchPosition.Count);
         length = 0;
 
 
@@ -78,7 +80,7 @@ public class TouchMesh : MonoBehaviour
 
         if (((Vector2)e.Position - touchPosition[index]).sqrMagnitude > 300)
         {
-          
+         
             touchPosition.Add((Vector2)e.Position);
            // bonePosition.Add(rayPos(e.Position));
             index++;
@@ -112,6 +114,8 @@ public class TouchMesh : MonoBehaviour
 
     void touchToBonePosition()
     {
+
+      
         foreach (Vector2 point in touchPosition)
         {
             Ray ray = Camera.main.ScreenPointToRay(point);
@@ -156,7 +160,6 @@ public class TouchMesh : MonoBehaviour
     }
     void build()
     {
-
 
         GameObject obj = new GameObject("bone");
         for(int i=0;i<capsulePos.Count;i++)
