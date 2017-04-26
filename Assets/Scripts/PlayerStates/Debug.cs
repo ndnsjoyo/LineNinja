@@ -25,8 +25,11 @@ namespace PlayerState
             else if (Input.GetKey("d"))
                 player.GetComponent<Rigidbody>().AddForce(Vector3.right, ForceMode.Impulse);
 
-            if (Input.GetKey("r"))
+            if (Input.GetKey("q"))
                 player.State.SwitchTo(typeof(Running));
+
+            if (Input.GetKey("e"))
+                player.State.SwitchTo(typeof(Dashing));
         }
     }
 }

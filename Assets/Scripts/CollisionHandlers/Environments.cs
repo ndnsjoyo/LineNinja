@@ -36,4 +36,20 @@ namespace CollisionHandler
             }
         }
     }
+
+    public class Bamboo : Handler
+    {
+        public Bamboo(CollisionHandlerManager manager) : base(manager) { }
+        public override void OnEnter(PlayerController player)
+        {
+            if (player.IsAlive)
+            {
+                if (player.State.GetType() == typeof(PlayerState.Dashing))
+                {
+                    Debug.Log("刷新冲刺");
+                    (player.State as PlayerState.Dashing).Refresh();
+                }
+            }
+        }
+    }
 }

@@ -20,12 +20,27 @@ namespace CollisionHandler
         }
     }
 
-    public class Bamboo : Handler
+    public class BambooSupp : Handler
     {
-        public Bamboo(CollisionHandlerManager manager) : base(manager) { }
+        public BambooSupp(CollisionHandlerManager manager) : base(manager) { }
         public override void OnEnter(PlayerController player)
         {
-            Debug.Log("竹子");
+            Debug.Log("补充竹子");
+
+            manager.Destroyed = true;
+            Destroy(manager.managedObject);
+        }
+    }
+
+    public class ThunderSpirit : Handler
+    {
+        public ThunderSpirit(CollisionHandlerManager manager) : base(manager) { }
+
+        public override void OnEnter(PlayerController player)
+        {
+            Debug.Log("雷灵");
+
+            player.State.SwitchTo(typeof(PlayerState.Dashing));
 
             manager.Destroyed = true;
             Destroy(manager.managedObject);

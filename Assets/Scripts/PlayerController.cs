@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
 
     // 基准速度
     public float baseSpeed = 10.0f;
+    public float dashSpeed = 50.0f;
 
     private PlayerState.State _state;
     public PlayerState.State State

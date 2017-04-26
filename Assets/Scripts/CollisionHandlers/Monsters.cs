@@ -36,7 +36,7 @@ namespace CollisionHandler
             if (player.IsAlive)
             {
                 manager.Destroyed = true;
-                Destroy(manager);
+                Destroy(manager.managedObject);
             }
         }
     }
