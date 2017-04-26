@@ -18,6 +18,10 @@ public class TouchMesh : MonoBehaviour
     private Vector3 propPosition;
 
     public FingerManager fingerManager;
+
+
+
+    public float undoRange = 10;
     //private LineRenderer line;
     //private List<int> triangles = null;
 
@@ -27,8 +31,9 @@ public class TouchMesh : MonoBehaviour
     public GameObject testPoint;
     public float length = 0;
     public GameObject bamboo;
-
-  
+    public float AllLength;
+    private float screenLength = 0;
+    public float lastLength = 0;
     void Awake()
     {
         fingerManager = FingerManager.instance;
@@ -43,11 +48,11 @@ public class TouchMesh : MonoBehaviour
         propPosition = new Vector3();
         capsulePos = new List<Vector3>();
         lengths = new List<float>();
-      
+        lastLength = AllLength;
 
-      
-       // line = GetComponent<LineRenderer>();
-      //  triangles = new List<int>();
+
+        // line = GetComponent<LineRenderer>();
+        //  triangles = new List<int>();
     }
     void OnEnable()
     {
@@ -76,11 +81,28 @@ public class TouchMesh : MonoBehaviour
 
     void OnFingerMove(FingerMotionEvent e)
     {
-
+        
 
         if (((Vector2)e.Position - touchPosition[index]).sqrMagnitude > 300)
         {
-         
+          
+
+            //判断线的长度  以及能否继续划线
+            if (!CanDraw((e.Position - touchPosition[index]).magnitude)) return;
+
+
+
+            // 撤销操作
+            if (index>0)
+            {
+                Vector2 dirNow = e.Position - touchPosition[index];
+                Vector2 dirLast = touchPosition[index] - touchPosition[index - 1];
+                if (JudgeUndo(dirNow, dirLast)) return;
+            }
+          
+
+
+
             touchPosition.Add((Vector2)e.Position);
            // bonePosition.Add(rayPos(e.Position));
             index++;
@@ -88,7 +110,36 @@ public class TouchMesh : MonoBehaviour
         }
     }
     
+    bool CanDraw(float f)
+    {
+        lastLength -= f/100;
 
+
+
+        if (lastLength <= 0)
+        {
+            lastLength = 0;
+            return false; }
+
+        return true;
+    }
+
+
+
+    bool JudgeUndo(Vector2 now,Vector2 last)
+    {
+        float angle = Vector2.Angle(now, last);
+
+       
+        if(angle>130)
+        {
+            touchPosition.RemoveAt(index);
+            index--;
+            lastLength += last.magnitude / 100;
+            return true;
+        }
+      return false;
+    }
 
     
     void OnFingerUp(FingerUpEvent e)
@@ -178,7 +229,7 @@ public class TouchMesh : MonoBehaviour
         {
            
             int number = (int)(lengths[i] / (Width*2));
-            print(lengths[i] + "         " + number);
+            //print(lengths[i] + "         " + number);
             for (int j=0;j<number;j++)
             {
                 pos = bonePosition[i] + (j ) * normals[i] / (number);
