@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollisionHandler : UnityEngine.Object
+namespace CollisionHandler
 {
-    protected GameObject gameObject;
-    public CollisionHandler(GameObject gameObject)
+    public class Handler : UnityEngine.Object
     {
-        this.gameObject = gameObject;
+        protected GameObject gameObject;
+        public Handler(GameObject gameObject)
+        {
+            this.gameObject = gameObject;
+        }
+
+        public virtual void OnEnter(PlayerController player) { }
+        public virtual void OnStay(PlayerController player) { }
+        public virtual void OnExit(PlayerController player) { }
     }
 
-    public virtual void OnEnter(PlayerController player) { }
-    public virtual void OnStay(PlayerController player) { }
-    public virtual void OnExit(PlayerController player) { }
 }

@@ -13,8 +13,8 @@ public class PlayerController : MonoBehaviour
     // 基准速度
     public float baseSpeed = 10.0f;
 
-    private PlayerState _state;
-    public PlayerState State
+    private PlayerState.State _state;
+    public PlayerState.State State
     {
         get { return _state; }
         set { _state = value; }
@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
 
     public bool IsAlive
     {
-        get { return _state.GetType() != typeof(DeadPlayerState); }
+        get { return _state.GetType() != typeof(PlayerState.Dead); }
     }
 
     void Start()
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
         // 获取组件
         _rigidbody = GetComponent<Rigidbody>();
 
-        _state = new DebugPlayerState(this);
+        _state = new PlayerState.Debug(this);
         _state.Enter();
     }
 
@@ -39,9 +39,9 @@ public class PlayerController : MonoBehaviour
         _state.Update();
     }
 
-    public void Kill()
+    void FixedUpdate()
     {
-        _state.SwitchTo(typeof(DeadPlayerState));
+        _state.FixedUpdate();
     }
 
     // Debug

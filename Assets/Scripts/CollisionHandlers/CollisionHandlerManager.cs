@@ -3,103 +3,106 @@ using System.Reflection;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollisionHandlerManager : MonoBehaviour
+namespace CollisionHandler
 {
-    public GameObject managedObject;
-
-    static private Type[] buffCtorParamTypes;
-    static CollisionHandlerManager()
+    public class CollisionHandlerManager : MonoBehaviour
     {
-        buffCtorParamTypes = new Type[] { typeof(GameObject) };
-    }
+        public GameObject managedObject;
 
-    public string[] handlers;
-    private List<CollisionHandler> _handlers;
-
-    void Awake()
-    {
-        if (managedObject == null)
-            managedObject = gameObject;
-
-        _handlers = new List<CollisionHandler>();
-
-        foreach (string handlerName in handlers)
+        static private Type[] buffCtorParamTypes;
+        static CollisionHandlerManager()
         {
-            Type buffType = Type.GetType(handlerName + "CollisionHandler");
-            ConstructorInfo buffCtor = buffType.GetConstructor(buffCtorParamTypes);
-            CollisionHandler handler = buffCtor.Invoke(new[] { managedObject }) as CollisionHandler;
-            _handlers.Add(handler);
+            buffCtorParamTypes = new Type[] { typeof(GameObject) };
         }
-    }
 
-    void OnCollisionEnter(Collision other)
-    {
-        PlayerController player = other.gameObject.GetComponent<PlayerController>();
-        if (player != null)
+        public string[] handlers;
+        private List<Handler> _handlers;
+
+        void Awake()
         {
-            foreach (var buff in _handlers)
+            if (managedObject == null)
+                managedObject = gameObject;
+
+            _handlers = new List<Handler>();
+
+            foreach (string handlerName in handlers)
             {
-                buff.OnEnter(player);
+                Type buffType = Type.GetType("CollisionHandler." + handlerName);
+                ConstructorInfo buffCtor = buffType.GetConstructor(buffCtorParamTypes);
+                Handler handler = buffCtor.Invoke(new[] { managedObject }) as Handler;
+                _handlers.Add(handler);
             }
         }
-    }
 
-    void OnCollisionStay(Collision other)
-    {
-        PlayerController player = other.gameObject.GetComponent<PlayerController>();
-        if (player != null)
+        void OnCollisionEnter(Collision other)
         {
-            foreach (var buff in _handlers)
+            PlayerController player = other.gameObject.GetComponent<PlayerController>();
+            if (player != null)
             {
-                buff.OnStay(player);
+                foreach (var buff in _handlers)
+                {
+                    buff.OnEnter(player);
+                }
             }
         }
-    }
 
-    void OnCollisionExit(Collision other)
-    {
-        PlayerController player = other.gameObject.GetComponent<PlayerController>();
-        if (player != null)
+        void OnCollisionStay(Collision other)
         {
-            foreach (var buff in _handlers)
+            PlayerController player = other.gameObject.GetComponent<PlayerController>();
+            if (player != null)
             {
-                buff.OnExit(player);
+                foreach (var buff in _handlers)
+                {
+                    buff.OnStay(player);
+                }
             }
         }
-    }
 
-    void OnTriggerEnter(Collider other)
-    {
-        PlayerController player = other.gameObject.GetComponent<PlayerController>();
-        if (player != null)
+        void OnCollisionExit(Collision other)
         {
-            foreach (var buff in _handlers)
+            PlayerController player = other.gameObject.GetComponent<PlayerController>();
+            if (player != null)
             {
-                buff.OnEnter(player);
+                foreach (var buff in _handlers)
+                {
+                    buff.OnExit(player);
+                }
             }
         }
-    }
 
-    void OnTriggerStay(Collider other)
-    {
-        PlayerController player = other.gameObject.GetComponent<PlayerController>();
-        if (player != null)
+        void OnTriggerEnter(Collider other)
         {
-            foreach (var buff in _handlers)
+            PlayerController player = other.gameObject.GetComponent<PlayerController>();
+            if (player != null)
             {
-                buff.OnStay(player);
+                foreach (var buff in _handlers)
+                {
+                    buff.OnEnter(player);
+                }
             }
         }
-    }
 
-    void OnTriggerExit(Collider other)
-    {
-        PlayerController player = other.gameObject.GetComponent<PlayerController>();
-        if (player != null)
+        void OnTriggerStay(Collider other)
         {
-            foreach (var buff in _handlers)
+            PlayerController player = other.gameObject.GetComponent<PlayerController>();
+            if (player != null)
             {
-                buff.OnExit(player);
+                foreach (var buff in _handlers)
+                {
+                    buff.OnStay(player);
+                }
+            }
+        }
+
+        void OnTriggerExit(Collider other)
+        {
+            PlayerController player = other.gameObject.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                foreach (var buff in _handlers)
+                {
+                    buff.OnExit(player);
+                }
             }
         }
     }

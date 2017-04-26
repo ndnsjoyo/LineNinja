@@ -1,49 +1,52 @@
 ﻿using UnityEngine;
 
-public class HouseCollisionHandler : CollisionHandler
+namespace CollisionHandler
 {
-    public HouseCollisionHandler(GameObject gameObject) : base(gameObject) { }
-    public override void OnEnter(PlayerController player)
+    public class House : Handler
     {
-        Debug.Log("房屋");
-    }
-}
-
-public class DeadlyCollisionHandler : CollisionHandler
-{
-    public DeadlyCollisionHandler(GameObject gameObject) : base(gameObject) { }
-    public override void OnEnter(PlayerController player)
-    {
-        Debug.Log("致命");
-        if (player.IsAlive)
+        public House(GameObject gameObject) : base(gameObject) { }
+        public override void OnEnter(PlayerController player)
         {
-            player.Kill();
+            Debug.Log("房屋");
         }
     }
-}
 
-public class JumpCollisionHandler : CollisionHandler
-{
-    public JumpCollisionHandler(GameObject gameObject) : base(gameObject) { }
-    public override void OnEnter(PlayerController player)
+    public class Deadly : Handler
     {
-        Debug.Log("跳跃");
-        if (player.IsAlive)
+        public Deadly(GameObject gameObject) : base(gameObject) { }
+        public override void OnEnter(PlayerController player)
         {
-            player.State.SwitchTo(typeof(JumpingPlayerState));
+            Debug.Log("致命");
+            if (player.IsAlive)
+            {
+                player.State.SwitchTo(typeof(PlayerState.Dead));
+            }
         }
     }
-}
 
-public class KillableCollisionHandler : CollisionHandler
-{
-    public KillableCollisionHandler(GameObject gameObject) : base(gameObject) { }
-    public override void OnEnter(PlayerController player)
+    public class Jump : Handler
     {
-        Debug.Log("击杀");
-        if (player.IsAlive)
+        public Jump(GameObject gameObject) : base(gameObject) { }
+        public override void OnEnter(PlayerController player)
         {
-            Destroy(gameObject);
+            Debug.Log("跳跃");
+            if (player.IsAlive)
+            {
+                player.State.SwitchTo(typeof(PlayerState.Jumping));
+            }
+        }
+    }
+
+    public class Killable : Handler
+    {
+        public Killable(GameObject gameObject) : base(gameObject) { }
+        public override void OnEnter(PlayerController player)
+        {
+            Debug.Log("击杀");
+            if (player.IsAlive)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
