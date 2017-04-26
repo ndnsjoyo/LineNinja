@@ -10,9 +10,11 @@ public class PlayerController : MonoBehaviour
         get { return _rigidbody; }
     }
 
-    // 基准速度
-    public float baseSpeed = 10.0f;
-    public float dashSpeed = 50.0f;
+    private SpeedRegulator _speedRegulator;
+    public SpeedRegulator SpeedRegulator
+    {
+        get { return _speedRegulator; }
+    }
 
     private PlayerState.State _state;
     public PlayerState.State State
@@ -49,6 +51,7 @@ public class PlayerController : MonoBehaviour
     {
         // 获取组件
         _rigidbody = GetComponent<Rigidbody>();
+        _speedRegulator = GetComponent<SpeedRegulator>();
 
         _state = new PlayerState.Debug(this);
         _state.Enter();

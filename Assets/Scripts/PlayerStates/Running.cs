@@ -11,14 +11,7 @@ namespace PlayerState
         public override void Enter()
         {
             UnityEngine.Debug.Log("开始奔跑");
-            if (player.Rigidbody.velocity.magnitude == 0.0f)
-            {
-                player.Rigidbody.velocity = Vector3.forward * player.baseSpeed;
-            }
-            else
-            {
-                player.Rigidbody.velocity = player.Rigidbody.velocity.normalized * player.baseSpeed;
-            }
+            player.SpeedRegulator.Speed = 10.0f;
         }
     }
 }

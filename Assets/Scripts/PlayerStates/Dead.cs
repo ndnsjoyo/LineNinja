@@ -11,6 +11,7 @@ namespace PlayerState
         public override void Enter()
         {
             UnityEngine.Debug.Log("死亡");
+            player.SpeedRegulator.Speed = 0.0f;
         }
     }
 }

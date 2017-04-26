@@ -2,19 +2,6 @@
 
 namespace CollisionHandler
 {
-    public class Ground : Handler
-    {
-        public Ground(CollisionHandlerManager manager) : base(manager) { }
-        public override void OnEnter(PlayerController player)
-        {
-            if (player.State.GetType() == typeof(PlayerState.Jumping))
-            {
-                Debug.Log("跳跃落地");
-                player.State.SwitchTo(typeof(PlayerState.Running));
-            }
-        }
-    }
-
     public class Pool : Handler
     {
         public Pool(CollisionHandlerManager manager) : base(manager) { }

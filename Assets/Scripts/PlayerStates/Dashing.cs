@@ -13,14 +13,7 @@ namespace PlayerState
         public override void Enter()
         {
             UnityEngine.Debug.Log("开始冲刺");
-            if (player.Rigidbody.velocity.magnitude == 0.0f)
-            {
-                player.Rigidbody.velocity = Vector3.forward * player.dashSpeed;
-            }
-            else
-            {
-                player.Rigidbody.velocity = player.Rigidbody.velocity.normalized * player.dashSpeed;
-            }
+            player.SpeedRegulator.Speed = 20.0f;
         }
 
         private int refreshTimeLimit = 2;
