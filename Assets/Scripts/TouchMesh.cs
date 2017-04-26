@@ -14,24 +14,28 @@ public class TouchMesh : MonoBehaviour
     private List<Vector3> normals = null;      //每个胶囊体的方向
     private List<Vector3>  capsulePos = null;   //每个胶囊体的位置
     private List<float> lengths = null;
+    private List<Transform> UIobjs = null;
+    private List<float> touchLengths = null;
+
     private int index = 0;
     private Vector3 propPosition;
 
-    public FingerManager fingerManager;
+    private FingerManager fingerManager;
 
+ 
 
-
-    public float undoRange = 10;
+    //public float undoRange = 10;
     //private LineRenderer line;
     //private List<int> triangles = null;
 
-
+    
 
     public float Width = 0;
     public GameObject testPoint;
     public float length = 0;
     public GameObject bamboo;
     public float AllLength;
+    public GameObject UIObj;
     private float screenLength = 0;
     public float lastLength = 0;
     void Awake()
@@ -48,8 +52,10 @@ public class TouchMesh : MonoBehaviour
         propPosition = new Vector3();
         capsulePos = new List<Vector3>();
         lengths = new List<float>();
+        UIobjs = new List<Transform>();
+        touchLengths = new List<float>();
         lastLength = AllLength;
-
+       
 
         // line = GetComponent<LineRenderer>();
         //  triangles = new List<int>();
@@ -72,7 +78,8 @@ public class TouchMesh : MonoBehaviour
     void OnFingerDown(FingerDownEvent e)
     {
         touchPosition.Add((Vector2)e.Position);
-       // print(touchPosition.Count);
+        UIobjs.Add(MyInstiateUIObj(e.Position));
+        // print(touchPosition.Count);
         length = 0;
 
 
@@ -85,10 +92,10 @@ public class TouchMesh : MonoBehaviour
 
         if (((Vector2)e.Position - touchPosition[index]).sqrMagnitude > 300)
         {
-          
-
+            float touchlength = (e.Position - touchPosition[index]).magnitude;
+            touchLengths.Add(touchlength);
             //判断线的长度  以及能否继续划线
-            if (!CanDraw((e.Position - touchPosition[index]).magnitude)) return;
+            if (!CanDraw(touchlength) )return;
 
 
 
@@ -104,6 +111,7 @@ public class TouchMesh : MonoBehaviour
 
 
             touchPosition.Add((Vector2)e.Position);
+            UIobjs.Add(MyInstiateUIObj(e.Position));
            // bonePosition.Add(rayPos(e.Position));
             index++;
           
@@ -133,9 +141,15 @@ public class TouchMesh : MonoBehaviour
        
         if(angle>130)
         {
+            //  print(UIobjs.Count + "   " + index);
+            Destroy(UIobjs[index ].gameObject);
+            UIobjs.RemoveAt(index);
+            
             touchPosition.RemoveAt(index);
+            lastLength += touchLengths[index] / 100;
+            touchLengths.RemoveAt(index);
             index--;
-            lastLength += last.magnitude / 100;
+            
             return true;
         }
       return false;
@@ -353,8 +367,12 @@ public class TouchMesh : MonoBehaviour
         normals.Clear();
         capsulePos.Clear();
         lengths.Clear();
-        // triangles.Clear();
-        index = 0;
+        touchLengths.Clear();
+        foreach (Transform obj in UIobjs)
+            Destroy(obj.gameObject);
+        UIobjs.Clear();
+      // triangles.Clear();
+      index = 0;
        
     }
 
@@ -401,8 +419,18 @@ public class TouchMesh : MonoBehaviour
         return obj;
 
     }
+     
+    Transform MyInstiateUIObj(Vector3 pos)
+    {
+        GameObject obj= (GameObject)Instantiate(UIObj, pos, new Quaternion(0, 0, 0, 0));
 
-  
+        obj.transform.parent = GameObject.Find("Line").transform;
+        return obj.transform;
+
+    }
+
+
+
 }
 //using System.Collections;
 //using System.Collections.Generic;
