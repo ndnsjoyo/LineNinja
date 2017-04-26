@@ -36,18 +36,4 @@ namespace CollisionHandler
             }
         }
     }
-
-    public class Killable : Handler
-    {
-        public Killable(CollisionHandlerManager manager) : base(manager) { }
-        public override void OnEnter(PlayerController player)
-        {
-            Debug.Log("击杀");
-            if (player.IsAlive)
-            {
-                manager.Destroyed = true;
-                Destroy(manager);
-            }
-        }
-    }
 }
