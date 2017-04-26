@@ -18,7 +18,7 @@ namespace CollisionHandler
         public string[] handlers;
         private List<Handler> _handlers;
 
-        public bool destroyed = false;
+        [HideInInspector] public bool Destroyed = false;
 
         void Awake()
         {
@@ -44,7 +44,7 @@ namespace CollisionHandler
                 foreach (var buff in _handlers)
                 {
                     buff.OnEnter(player);
-                    if (destroyed) break;
+                    if (Destroyed) break;
                 }
             }
         }
@@ -57,7 +57,7 @@ namespace CollisionHandler
                 foreach (var buff in _handlers)
                 {
                     buff.OnStay(player);
-                    if (destroyed) break;
+                    if (Destroyed) break;
                 }
             }
         }
@@ -70,7 +70,7 @@ namespace CollisionHandler
                 foreach (var buff in _handlers)
                 {
                     buff.OnExit(player);
-                    if (destroyed) break;
+                    if (Destroyed) break;
                 }
             }
         }
@@ -83,7 +83,7 @@ namespace CollisionHandler
                 foreach (var buff in _handlers)
                 {
                     buff.OnEnter(player);
-                    if (destroyed) break;
+                    if (Destroyed) break;
                 }
             }
         }
@@ -96,7 +96,7 @@ namespace CollisionHandler
                 foreach (var buff in _handlers)
                 {
                     buff.OnStay(player);
-                    if (destroyed) break;
+                    if (Destroyed) break;
                 }
             }
         }
@@ -109,7 +109,7 @@ namespace CollisionHandler
                 foreach (var buff in _handlers)
                 {
                     buff.OnExit(player);
-                    if (destroyed) break;
+                    if (Destroyed) break;
                 }
             }
         }

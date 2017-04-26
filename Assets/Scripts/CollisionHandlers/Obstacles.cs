@@ -45,7 +45,7 @@ namespace CollisionHandler
             Debug.Log("击杀");
             if (player.IsAlive)
             {
-                manager.destroyed = true;
+                manager.Destroyed = true;
                 Destroy(manager);
             }
         }

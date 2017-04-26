@@ -14,9 +14,21 @@ namespace CollisionHandler
             {
                 player.WithKatana = true;
 
-                manager.destroyed = true;
+                manager.Destroyed = true;
                 Destroy(manager.managedObject);
             }
+        }
+    }
+
+    public class Bamboo : Handler
+    {
+        public Bamboo(CollisionHandlerManager manager) : base(manager) { }
+        public override void OnEnter(PlayerController player)
+        {
+            Debug.Log("竹子");
+
+            manager.Destroyed = true;
+            Destroy(manager.managedObject);
         }
     }
 }

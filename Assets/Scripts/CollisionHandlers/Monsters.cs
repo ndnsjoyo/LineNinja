@@ -13,7 +13,7 @@ namespace CollisionHandler
             if (player.IsAlive && player.WithKatana)
             {
                 player.WithKatana = false;
-                manager.destroyed = true;
+                manager.Destroyed = true;
                 Destroy(manager.managedObject);
             }
         }
