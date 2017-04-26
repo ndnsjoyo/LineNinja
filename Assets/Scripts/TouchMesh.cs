@@ -67,7 +67,7 @@ public class TouchMesh : MonoBehaviour
     void OnFingerDown(FingerDownEvent e)
     {
         touchPosition.Add((Vector2)e.Position);
-        print(touchPosition.Count);
+       // print(touchPosition.Count);
         length = 0;
 
 
@@ -160,7 +160,8 @@ public class TouchMesh : MonoBehaviour
     }
     void build()
     {
-
+        if (capsulePos.Count < 1)
+            return;
         GameObject obj = new GameObject("bone");
         for(int i=0;i<capsulePos.Count;i++)
         {
@@ -171,7 +172,7 @@ public class TouchMesh : MonoBehaviour
         obj.transform.position = new Vector3(0, 0.5f, 0);
 
 
-
+        GameObject obj2 = new GameObject("bamboos");
         Vector3 pos=new Vector3();
         for(int i=0;i<capsulePos.Count;i++)
         {
@@ -181,10 +182,13 @@ public class TouchMesh : MonoBehaviour
             for (int j=0;j<number;j++)
             {
                 pos = bonePosition[i] + (j ) * normals[i] / (number);
-                MyInstiateBamboo(pos, Width);
+                GameObject point=MyInstiateBamboo(pos, Width);
+                point.transform.parent = obj2.transform;
             }
         }
-        MyInstiateBamboo(bonePosition[bonePosition.Count-1], Width);
+
+        GameObject point2=MyInstiateBamboo(bonePosition[bonePosition.Count-1], Width);
+        point2.transform.parent = obj2.transform;
 
 
     }
