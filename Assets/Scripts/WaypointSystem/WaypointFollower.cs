@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 namespace Waypoint
 {
@@ -9,13 +10,14 @@ namespace Waypoint
         public WaypointGroup waypointGroup;
 
         // router
-        public enum RouteType
+        public enum RoutingType
         {
             ONCE,
             CIRCULAR,
             RETURN
         }
-        public RouteType routeType = RouteType.ONCE;
+        public RoutingType routeType = RoutingType.ONCE;
+
         private Vector3[] waypoints;
         private int nextWaypoint = -1;
         public int initDirection = 1;
@@ -64,13 +66,13 @@ namespace Waypoint
         {
             switch (routeType)
             {
-                case RouteType.ONCE:
+                case RoutingType.ONCE:
                     if (0 < nextWaypoint && nextWaypoint < waypoints.Length - 1)
                     {
                         return nextWaypoint + initDirection;
                     }
                     break;
-                case RouteType.CIRCULAR:
+                case RoutingType.CIRCULAR:
                     if (nextWaypoint == waypoints.Length - 1 && initDirection == 1)
                     {
                         return 0;
@@ -83,7 +85,7 @@ namespace Waypoint
                     {
                         return nextWaypoint + initDirection;
                     }
-                case RouteType.RETURN:
+                case RoutingType.RETURN:
                     if ((nextWaypoint == waypoints.Length - 1 && initDirection == 1)
                     || (nextWaypoint == 0 && initDirection == -1))
                     {

@@ -6,17 +6,18 @@ namespace Waypoint
 {
     public class WaypointGroup : MonoBehaviour
     {
-        private Vector3[] waypoints;
+        private Vector3[] _waypoints;
         public Vector3[] Waypoints
         {
-            get { return waypoints; }
+            get { return _waypoints; }
         }
 
         void Awake()
         {
-            waypoints = new Vector3[transform.childCount];
+            // 加载所有子对象的transform位置
+            _waypoints = new Vector3[transform.childCount];
             for (int i = 0; i < transform.childCount; i++)
-                waypoints[i] = transform.GetChild(i).position;
+                _waypoints[i] = transform.GetChild(i).position;
         }
     }
 }

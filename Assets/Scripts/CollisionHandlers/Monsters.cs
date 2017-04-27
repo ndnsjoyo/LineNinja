@@ -9,7 +9,7 @@ namespace CollisionHandler
         private ImageEffectController controller;
         public Monster(CollisionHandlerManager manager) : base(manager)
         {
-            controller = GameObject.Find("_Manager").GetComponent<ImageEffectController>();
+            controller = GameObject.Find("_Managers").GetComponent<ImageEffectController>();
         }
 
         public override void OnEnter(PlayerController player)
