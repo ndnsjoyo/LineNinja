@@ -19,7 +19,6 @@ public class TouchMesh : MonoBehaviour
                 touchPosition = value;
             }
         }
-
         private Transform _UIobj;
         public Transform UIobj
         {
@@ -32,8 +31,6 @@ public class TouchMesh : MonoBehaviour
                 _UIobj = value;
             }
         }
-
-
         private float mlength;
         public float Length
         {
@@ -55,16 +52,26 @@ public class TouchMesh : MonoBehaviour
             //touchPosition =new Vector2();
             // UIobjs = new Transform();
         }
-
+        ~TouchMsg()
+        {
+            print("succeed");
+            Destroy(_UIobj.gameObject);
+        }
         public void Add()
         {
 
         }
 
     }
+
+
     private List<TouchMsg> touch = null;
-    
-   
+    private void myRemove(int i, List<TouchMsg> t)
+    {
+        t[i] = null;
+        t.RemoveAt(i);
+
+    }
 
     private List<Vector2> touchPosition = null;//触摸到的位置，世界坐标
 
@@ -108,6 +115,8 @@ public class TouchMesh : MonoBehaviour
     }
     void Start()
     {
+        touch = new List<TouchMsg>();
+
         touchPosition = new List<Vector2>();
         // verticles = new List<Vector3>();
         normals = new List<Vector3>();
@@ -140,18 +149,28 @@ public class TouchMesh : MonoBehaviour
 
     void OnFingerDown(FingerDownEvent e)
     {
+
+
+
+        touch.Add(new TouchMsg((Vector2)e.Position, MyInstiateUIObj(e.Position), 0));
+
+        //myRemove(0,touch);
+        // touch.RemoveAt(0);
         touchPosition.Add((Vector2)e.Position);
         UIobjs.Add(MyInstiateUIObj(e.Position));
-        // print(touchPosition.Count);
-        length = 0;
+        //// print(touchPosition.Count);
+        //length = 0;
 
 
-        
+
     }
+
+  
+
 
     void OnFingerMove(FingerMotionEvent e)
     {
-        
+        print(index);
 
         if (((Vector2)e.Position - touchPosition[index]).sqrMagnitude > 300)
         {
@@ -492,7 +511,7 @@ public class TouchMesh : MonoBehaviour
 
     }
 
-
+   
 
 }
 //using System.Collections;
