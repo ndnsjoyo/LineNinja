@@ -2,12 +2,18 @@
 
 namespace CollisionHandler
 {
-    public class House : Handler
+    public class DashBreakable : Handler
     {
-        public House(CollisionHandlerManager manager) : base(manager) { }
+        public DashBreakable(CollisionHandlerManager manager) : base(manager) { }
         public override void OnEnter(PlayerController player)
         {
-            Debug.Log("房屋");
+            if (player.State.GetType() == typeof(PlayerState.Dashing))
+            {
+                Debug.Log("冲刺摧毁障碍");
+
+                Destroy(manager.managedObject);
+                manager.breaked = true;
+            }
         }
     }
 
@@ -19,20 +25,20 @@ namespace CollisionHandler
             Debug.Log("致命");
             if (player.IsAlive)
             {
-                player.State.SwitchTo(typeof(PlayerState.Dead));
+                player.State.SwitchTo(new PlayerState.Dead(player));
             }
         }
     }
 
-    public class Jump : Handler
+    public class SpringBoard : Handler
     {
-        public Jump(CollisionHandlerManager manager) : base(manager) { }
+        public SpringBoard(CollisionHandlerManager manager) : base(manager) { }
         public override void OnEnter(PlayerController player)
         {
-            Debug.Log("跳跃");
+            Debug.Log("起跳器");
             if (player.IsAlive)
             {
-                player.State.SwitchTo(typeof(PlayerState.Jumping));
+                player.State.SwitchTo(new PlayerState.Jumping(player));
             }
         }
     }

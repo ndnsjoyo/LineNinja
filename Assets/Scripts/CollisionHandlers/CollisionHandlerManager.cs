@@ -7,18 +7,19 @@ namespace CollisionHandler
 {
     public class CollisionHandlerManager : MonoBehaviour
     {
+        // 用于放在独立gameobject的探头collider
+        // 若不指定则为挂载脚本的gameobject
         public GameObject managedObject;
 
         static private Type[] buffCtorParamTypes;
         static CollisionHandlerManager()
         {
+            // handler构造函数参数类型列表
             buffCtorParamTypes = new Type[] { typeof(CollisionHandlerManager) };
         }
 
         public string[] handlers;
         private List<Handler> _handlers;
-
-        [HideInInspector] public bool Destroyed = false;
 
         void Awake()
         {
@@ -29,12 +30,24 @@ namespace CollisionHandler
 
             foreach (string handlerName in handlers)
             {
+                // 反射动态查找类型
                 Type buffType = Type.GetType("CollisionHandler." + handlerName);
+                if (buffType == null)
+                {
+                    Debug.Log("Cannot find handler class for " + handlerName);
+                    continue;
+                }
+
+                // 获取构造函数并实例化
                 ConstructorInfo buffCtor = buffType.GetConstructor(buffCtorParamTypes);
                 Handler handler = buffCtor.Invoke(new[] { this }) as Handler;
+
                 _handlers.Add(handler);
             }
         }
+
+        // 中断处理后续handler
+        [HideInInspector] public bool breaked = false;
 
         void OnCollisionEnter(Collision other)
         {
@@ -44,7 +57,7 @@ namespace CollisionHandler
                 foreach (var buff in _handlers)
                 {
                     buff.OnEnter(player);
-                    if (Destroyed) break;
+                    if (breaked) break;
                 }
             }
         }
@@ -57,7 +70,7 @@ namespace CollisionHandler
                 foreach (var buff in _handlers)
                 {
                     buff.OnStay(player);
-                    if (Destroyed) break;
+                    if (breaked) break;
                 }
             }
         }
@@ -70,7 +83,7 @@ namespace CollisionHandler
                 foreach (var buff in _handlers)
                 {
                     buff.OnExit(player);
-                    if (Destroyed) break;
+                    if (breaked) break;
                 }
             }
         }
@@ -83,7 +96,7 @@ namespace CollisionHandler
                 foreach (var buff in _handlers)
                 {
                     buff.OnEnter(player);
-                    if (Destroyed) break;
+                    if (breaked) break;
                 }
             }
         }
@@ -96,7 +109,7 @@ namespace CollisionHandler
                 foreach (var buff in _handlers)
                 {
                     buff.OnStay(player);
-                    if (Destroyed) break;
+                    if (breaked) break;
                 }
             }
         }
@@ -109,7 +122,7 @@ namespace CollisionHandler
                 foreach (var buff in _handlers)
                 {
                     buff.OnExit(player);
-                    if (Destroyed) break;
+                    if (breaked) break;
                 }
             }
         }

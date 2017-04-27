@@ -6,12 +6,10 @@ namespace PlayerState
 {
     public class Running : State
     {
-        public Running(PlayerController player) : base(player) { }
-
-        public override void Enter()
+        public Running(PlayerController player) : base(player)
         {
             UnityEngine.Debug.Log("开始奔跑");
-            player.SpeedRegulator.Speed = 10.0f;
+            player.Speed = player.runningSpeed;
         }
     }
 }

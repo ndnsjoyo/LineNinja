@@ -6,24 +6,20 @@ namespace PlayerState
 {
     public class Dashing : State
     {
-        static readonly private float dashDistance = 20.0f;
-
-        public Dashing(PlayerController player) : base(player) { }
-
-        public override void Enter()
+        public Dashing(PlayerController player) : base(player)
         {
             UnityEngine.Debug.Log("开始冲刺");
-            player.SpeedRegulator.Speed = 20.0f;
+            player.Speed = player.dashingSpeed;
+            _refreshTimesLimit = player.dashingRefreshTimesLimit;
         }
 
-        private int refreshTimeLimit = 2;
-        private float milometer = 0.0f;
+        private float _milometer = 0.0f;
         public override void FixedUpdate()
         {
-            milometer += Time.fixedDeltaTime * player.Rigidbody.velocity.magnitude;
-            if (milometer > dashDistance)
+            _milometer += player.FixedMovedDistance;
+            if (_milometer > player.dashingDistance)
             {
-                player.State.SwitchTo(typeof(Running));
+                player.State.SwitchTo(new Running(player));
             }
         }
 
@@ -32,16 +28,18 @@ namespace PlayerState
             UnityEngine.Debug.Log("结束冲刺");
         }
 
+        private int _refreshTimesLimit;
         public void Refresh()
         {
-            if (refreshTimeLimit > 0)
+            if (_refreshTimesLimit > 0)
             {
-                milometer = 0.0f;
-                refreshTimeLimit--;
+                UnityEngine.Debug.Log("刷新冲刺");
+                _milometer = 0.0f;
+                _refreshTimesLimit--;
             }
             else
             {
-                UnityEngine.Debug.Log("刷新失败，刷新次数耗尽");
+                UnityEngine.Debug.Log("冲刺刷新次数耗尽");
             }
         }
     }

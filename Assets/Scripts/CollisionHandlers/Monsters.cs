@@ -14,15 +14,17 @@ namespace CollisionHandler
 
         public override void OnEnter(PlayerController player)
         {
-            Debug.Log("怪兽");
+            Debug.Log("怪物");
             if (player.IsAlive && player.WithKatana)
             {
+                // 用掉刀
                 player.WithKatana = false;
 
+                // 加点特技
                 controller.OnChromatic(1.0f, 0.5f);
 
-                manager.Destroyed = true;
                 Destroy(manager.managedObject);
+                manager.breaked = true;
             }
         }
     }
@@ -32,11 +34,11 @@ namespace CollisionHandler
         public Killable(CollisionHandlerManager manager) : base(manager) { }
         public override void OnEnter(PlayerController player)
         {
-            Debug.Log("击杀");
+            Debug.Log("可击杀");
             if (player.IsAlive)
             {
-                manager.Destroyed = true;
                 Destroy(manager.managedObject);
+                manager.breaked = true;
             }
         }
     }
@@ -54,6 +56,7 @@ namespace CollisionHandler
             Debug.Log("迷雾兽");
             if (player.IsAlive)
             {
+                // 特技
                 controller.OnMist(1.0f);
             }
         }

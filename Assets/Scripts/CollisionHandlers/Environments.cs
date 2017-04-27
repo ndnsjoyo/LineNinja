@@ -2,41 +2,34 @@
 
 namespace CollisionHandler
 {
-    public class Pool : Handler
+    public class DashRefresher : Handler
     {
-        public Pool(CollisionHandlerManager manager) : base(manager) { }
-        public override void OnEnter(PlayerController player)
-        {
-            Debug.Log("水池 进入");
-            if (player.IsAlive)
-            {
-                player.State.SwitchTo(typeof(PlayerState.InPool));
-            }
-        }
-
-        public override void OnExit(PlayerController player)
-        {
-            Debug.Log("水池 离开");
-            if (player.IsAlive)
-            {
-                player.State.SwitchTo(typeof(PlayerState.Running));
-            }
-        }
-    }
-
-    public class Bamboo : Handler
-    {
-        public Bamboo(CollisionHandlerManager manager) : base(manager) { }
+        public DashRefresher(CollisionHandlerManager manager) : base(manager) { }
         public override void OnEnter(PlayerController player)
         {
             if (player.IsAlive)
             {
                 if (player.State.GetType() == typeof(PlayerState.Dashing))
                 {
-                    Debug.Log("刷新冲刺");
+                    Debug.Log("Dash刷新器");
                     (player.State as PlayerState.Dashing).Refresh();
                 }
             }
+        }
+    }
+
+    public class Pool : Handler
+    {
+        public Pool(CollisionHandlerManager manager) : base(manager) { }
+        public override void OnEnter(PlayerController player)
+        {
+            Debug.Log("进入池塘");
+            player.Speed *= 0.6f;
+        }
+        public override void OnExit(PlayerController player)
+        {
+            Debug.Log("离开池塘");
+            player.Speed /= 0.6f;
         }
     }
 }

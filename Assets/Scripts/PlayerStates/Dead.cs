@@ -6,12 +6,10 @@ namespace PlayerState
 {
     public class Dead : State
     {
-        public Dead(PlayerController player) : base(player) { }
-
-        public override void Enter()
+        public Dead(PlayerController player) : base(player)
         {
             UnityEngine.Debug.Log("死亡");
-            player.SpeedRegulator.Speed = 0.0f;
+            player.MotionLock = false;
         }
     }
 }

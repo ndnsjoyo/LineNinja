@@ -16,5 +16,4 @@ namespace CollisionHandler
         public virtual void OnStay(PlayerController player) { }
         public virtual void OnExit(PlayerController player) { }
     }
-
 }
