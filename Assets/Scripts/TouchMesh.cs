@@ -5,11 +5,74 @@ using UnityEngine;
 public class TouchMesh : MonoBehaviour
 {
 
-    
+    private class TouchMsg
+    {
+        private Vector2 touchPosition;
+        public Vector2 TouPosition
+        {
+            get
+            {
+                return touchPosition;
+            }
+            set
+            {
+                touchPosition = value;
+            }
+        }
 
+        private Transform _UIobj;
+        public Transform UIobj
+        {
+            get
+            {
+                return _UIobj;
+            }
+            set
+            {
+                _UIobj = value;
+            }
+        }
+
+
+        private float mlength;
+        public float Length
+        {
+            get
+            {
+                return mlength;
+            }
+            set
+            {
+                mlength = value;
+            }
+        }
+        public TouchMsg(Vector2 pos, Transform obj, float len)
+        {
+
+            touchPosition = pos;
+            _UIobj = obj;
+            mlength = len;
+            //touchPosition =new Vector2();
+            // UIobjs = new Transform();
+        }
+
+        public void Add()
+        {
+
+        }
+
+    }
+    private List<TouchMsg> touch = null;
+    
+   
 
     private List<Vector2> touchPosition = null;//触摸到的位置，世界坐标
+
+
     private List<Vector3> bonePosition = null; //转化到地面上的位置，世界坐标
+
+
+
     //private List<Vector3> verticles = null;    //生成mesh时的顶点 首先是世界坐标，之后会转化成本地坐标，目前用不到
     private List<Vector3> normals = null;      //每个胶囊体的方向
     private List<Vector3>  capsulePos = null;   //每个胶囊体的位置
