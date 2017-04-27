@@ -23,8 +23,7 @@ namespace CollisionHandler
                 // 加点特技
                 controller.OnChromatic(1.0f, 0.5f);
 
-                Destroy(manager.managedObject);
-                manager.breaked = true;
+                manager.Destroy();
             }
         }
     }
@@ -37,8 +36,7 @@ namespace CollisionHandler
             Debug.Log("可击杀");
             if (player.IsAlive)
             {
-                Destroy(manager.managedObject);
-                manager.breaked = true;
+                manager.Destroy();
             }
         }
     }

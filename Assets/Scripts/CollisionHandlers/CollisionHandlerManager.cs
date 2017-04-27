@@ -47,7 +47,12 @@ namespace CollisionHandler
         }
 
         // 中断处理后续handler
-        [HideInInspector] public bool breaked = false;
+        private bool breaked = false;
+        public void Destroy()
+        {
+            Destroy(managedObject);
+            breaked = true;
+        }
 
         void OnCollisionEnter(Collision other)
         {

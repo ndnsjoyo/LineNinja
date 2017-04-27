@@ -14,8 +14,7 @@ namespace CollisionHandler
             {
                 player.WithKatana = true;
 
-                Destroy(manager.managedObject);
-                manager.breaked = true;
+                manager.Destroy();
             }
         }
     }
@@ -27,8 +26,7 @@ namespace CollisionHandler
         {
             Debug.Log("补充竹子");
 
-            Destroy(manager.managedObject);
-            manager.breaked = true;
+            manager.Destroy();
         }
     }
 
@@ -42,8 +40,7 @@ namespace CollisionHandler
 
             player.State.SwitchTo(new PlayerState.Dashing(player));
 
-            Destroy(manager.managedObject);
-            manager.breaked = true;
+            manager.Destroy();
         }
     }
 }

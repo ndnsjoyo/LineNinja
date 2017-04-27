@@ -38,12 +38,22 @@ public class SpeedRegulator : MonoBehaviour
         }
     }
 
+    // TODO: 需要检查
     void FixedUpdate()
     {
         if (_locked)
         {
-            Vector3 direction = transform.rotation * Vector3.forward;
-            _rigidbody.velocity = direction * _speed;
+            // Vector3 direction = transform.rotation * Vector3.forward;
+            // _rigidbody.velocity = direction * _speed;
+
+            if (_rigidbody.velocity == Vector3.zero)
+            {
+                _rigidbody.velocity = Vector3.forward * _speed;
+            }
+            else
+            {
+                _rigidbody.velocity = _rigidbody.velocity.normalized * _speed;
+            }
         }
     }
 }

@@ -11,8 +11,7 @@ namespace CollisionHandler
             {
                 Debug.Log("冲刺摧毁障碍");
 
-                Destroy(manager.managedObject);
-                manager.breaked = true;
+                manager.Destroy();
             }
         }
     }
