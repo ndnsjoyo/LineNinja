@@ -2,100 +2,103 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaypointFollower : MonoBehaviour
+namespace Waypoint
 {
-    public WaypointGroup waypointGroup;
-
-    // router
-    public enum RouteType
+    public class WaypointFollower : MonoBehaviour
     {
-        ONCE,
-        CIRCULAR,
-        RETURN
-    }
-    public RouteType routeType = RouteType.ONCE;
-    private Vector3[] waypoints;
-    private int nextWaypoint = -1;
-    public int initDirection = 1;
+        public WaypointGroup waypointGroup;
 
-    // movement controller
-    public bool moving = true;
-    public float movingSpeed = 1.0f;
-
-    void Start()
-    {
-        waypoints = waypointGroup.Waypoints;
-        float minDist = float.PositiveInfinity;
-        for (int i = 0; i < waypoints.Length; i++)
+        // router
+        public enum RouteType
         {
-            float dist = (transform.position - waypoints[i]).magnitude;
-            if (dist < minDist)
+            ONCE,
+            CIRCULAR,
+            RETURN
+        }
+        public RouteType routeType = RouteType.ONCE;
+        private Vector3[] waypoints;
+        private int nextWaypoint = -1;
+        public int initDirection = 1;
+
+        // movement controller
+        public bool moving = true;
+        public float movingSpeed = 1.0f;
+
+        void Start()
+        {
+            waypoints = waypointGroup.Waypoints;
+            float minDist = float.PositiveInfinity;
+            for (int i = 0; i < waypoints.Length; i++)
             {
-                minDist = dist;
-                nextWaypoint = i;
+                float dist = (transform.position - waypoints[i]).magnitude;
+                if (dist < minDist)
+                {
+                    minDist = dist;
+                    nextWaypoint = i;
+                }
+            }
+            LookAtNextWaypoint();
+        }
+
+        void FixedUpdate()
+        {
+            if (moving)
+            {
+                transform.Translate(Vector3.forward * movingSpeed * Time.fixedDeltaTime);
+                // Debug.Log((transform.position - waypoints[nextWaypoint]).magnitude);
+
+                if ((transform.position - waypoints[nextWaypoint]).magnitude < 0.5f)
+                {
+                    nextWaypoint = GetNextWaypoint();
+                    if (nextWaypoint == -1)
+                    {
+                        moving = false;
+                        return;
+                    }
+                    LookAtNextWaypoint();
+                }
             }
         }
-        LookAtNextWaypoint();
-    }
 
-    void FixedUpdate()
-    {
-        if (moving)
+        int GetNextWaypoint()
         {
-            transform.Translate(Vector3.forward * movingSpeed * Time.fixedDeltaTime);
-            // Debug.Log((transform.position - waypoints[nextWaypoint]).magnitude);
-
-            if ((transform.position - waypoints[nextWaypoint]).magnitude < 0.5f)
+            switch (routeType)
             {
-                nextWaypoint = GetNextWaypoint();
-                if (nextWaypoint == -1)
-                {
-                    moving = false;
-                    return;
-                }
-                LookAtNextWaypoint();
+                case RouteType.ONCE:
+                    if (0 < nextWaypoint && nextWaypoint < waypoints.Length - 1)
+                    {
+                        return nextWaypoint + initDirection;
+                    }
+                    break;
+                case RouteType.CIRCULAR:
+                    if (nextWaypoint == waypoints.Length - 1 && initDirection == 1)
+                    {
+                        return 0;
+                    }
+                    else if (nextWaypoint == 0 && initDirection == -1)
+                    {
+                        return waypoints.Length - 1;
+                    }
+                    else
+                    {
+                        return nextWaypoint + initDirection;
+                    }
+                case RouteType.RETURN:
+                    if ((nextWaypoint == waypoints.Length - 1 && initDirection == 1)
+                    || (nextWaypoint == 0 && initDirection == -1))
+                    {
+                        initDirection *= -1;
+                    }
+                    return nextWaypoint + initDirection;
+                default:
+                    break;
             }
+            return -1;
         }
-    }
 
-    int GetNextWaypoint()
-    {
-        switch (routeType)
+        void LookAtNextWaypoint()
         {
-            case RouteType.ONCE:
-                if (0 < nextWaypoint && nextWaypoint < waypoints.Length - 1)
-                {
-                    return nextWaypoint + initDirection;
-                }
-                break;
-            case RouteType.CIRCULAR:
-                if (nextWaypoint == waypoints.Length - 1 && initDirection == 1)
-                {
-                    return 0;
-                }
-                else if (nextWaypoint == 0 && initDirection == -1)
-                {
-                    return waypoints.Length - 1;
-                }
-                else
-                {
-                    return nextWaypoint + initDirection;
-                }
-            case RouteType.RETURN:
-                if ((nextWaypoint == waypoints.Length - 1 && initDirection == 1)
-                || (nextWaypoint == 0 && initDirection == -1))
-                {
-                    initDirection *= -1;
-                }
-                return nextWaypoint + initDirection;
-            default:
-                break;
+            transform.rotation = Quaternion.LookRotation(waypoints[nextWaypoint] - transform.position);
         }
-        return -1;
-    }
-
-    void LookAtNextWaypoint()
-    {
-        transform.rotation = Quaternion.LookRotation(waypoints[nextWaypoint] - transform.position);
     }
 }
