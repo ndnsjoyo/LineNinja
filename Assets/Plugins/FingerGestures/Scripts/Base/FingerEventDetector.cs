@@ -155,7 +155,7 @@ public abstract class FingerEventDetector : MonoBehaviour
 
     }
         
-    protected virtual void FixedUpdate()
+    protected virtual void Update()
     {
         ProcessFingers();
     }
