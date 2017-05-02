@@ -10,6 +10,9 @@ namespace PlayerState
         {
             UnityEngine.Debug.Log("死亡");
             player.MotionLock = false;
+
+            player.Animator.SetBool("IsRunning", false);
+            player.Animator.SetTrigger("Killed");
         }
     }
 }
