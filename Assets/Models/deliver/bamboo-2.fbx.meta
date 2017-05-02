@@ -1,15 +1,15 @@
 fileFormatVersion: 2
-guid: 72cd977d0c37c594ba8b3e69df822ade
-timeCreated: 1493572974
+guid: 38699b73220eddc4287969e8131e43bd
+timeCreated: 1493738602
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: bamboo
     100002: bamboo 1
-    100004: bamboo5
-    100006: bamboo5_joint
-    100008: bamboo_
+    100004: //RootNode
+    100006: bamboo5
+    100008: bamboo5_joint
     100010: bamboo_01
     100012: bamboo_02
     100014: bamboo_03
@@ -18,38 +18,34 @@ ModelImporter:
     100020: bamboo_2_joint
     100022: bamboo_3
     100024: bamboo_3_joint
-    100026: //RootNode
-    100028: bamboo_joint
-    100030: bamboo_joint 1
-    100032: joint10
-    100034: joint12
-    100036: joint13
-    100038: joint14
-    100040: joint16
-    100042: joint17
-    100044: joint18
-    100046: joint19
-    100048: joint2
-    100050: joint21
-    100052: joint22
-    100054: joint23
-    100056: joint24
-    100058: joint25
-    100060: joint26
-    100062: joint27
-    100064: joint28
-    100066: joint3
-    100068: joint4
-    100070: joint5
-    100072: joint7
-    100074: joint8
-    100076: joint9
-    100078: polySurface5
+    100026: bamboo_joint
+    100028: bamboo_joint 1
+    100030: joint10
+    100032: joint12
+    100034: joint13
+    100036: joint14
+    100038: joint16
+    100040: joint17
+    100042: joint18
+    100044: joint19
+    100046: joint2
+    100048: joint21
+    100050: joint22
+    100052: joint23
+    100054: joint3
+    100056: joint4
+    100058: joint5
+    100060: joint7
+    100062: joint8
+    100064: joint9
+    100066: polySurface5
+    100068: small_B_1
+    100070: small_B_2
     400000: bamboo
     400002: bamboo 1
-    400004: bamboo5
-    400006: bamboo5_joint
-    400008: bamboo_
+    400004: //RootNode
+    400006: bamboo5
+    400008: bamboo5_joint
     400010: bamboo_01
     400012: bamboo_02
     400014: bamboo_03
@@ -58,44 +54,43 @@ ModelImporter:
     400020: bamboo_2_joint
     400022: bamboo_3
     400024: bamboo_3_joint
-    400026: //RootNode
-    400028: bamboo_joint
-    400030: bamboo_joint 1
-    400032: joint10
-    400034: joint12
-    400036: joint13
-    400038: joint14
-    400040: joint16
-    400042: joint17
-    400044: joint18
-    400046: joint19
-    400048: joint2
-    400050: joint21
-    400052: joint22
-    400054: joint23
-    400056: joint24
-    400058: joint25
-    400060: joint26
-    400062: joint27
-    400064: joint28
-    400066: joint3
-    400068: joint4
-    400070: joint5
-    400072: joint7
-    400074: joint8
-    400076: joint9
-    400078: polySurface5
-    2300000: bamboo_
-    2300002: polySurface5
-    3300000: bamboo_
-    3300002: polySurface5
-    4300000: bamboo_
-    4300002: bamboo
-    4300004: polySurface5
-    4300006: bamboo_2
-    4300008: bamboo_3
-    4300010: bamboo
-    4300012: bamboo5
+    400026: bamboo_joint
+    400028: bamboo_joint 1
+    400030: joint10
+    400032: joint12
+    400034: joint13
+    400036: joint14
+    400038: joint16
+    400040: joint17
+    400042: joint18
+    400044: joint19
+    400046: joint2
+    400048: joint21
+    400050: joint22
+    400052: joint23
+    400054: joint3
+    400056: joint4
+    400058: joint5
+    400060: joint7
+    400062: joint8
+    400064: joint9
+    400066: polySurface5
+    400068: small_B_1
+    400070: small_B_2
+    2300000: polySurface5
+    2300002: small_B_1
+    2300004: small_B_2
+    3300000: polySurface5
+    3300002: small_B_1
+    3300004: small_B_2
+    4300000: small_B_1
+    4300002: small_B_2
+    4300004: bamboo
+    4300006: polySurface5
+    4300008: bamboo_2
+    4300010: bamboo_3
+    4300012: bamboo
+    4300014: bamboo5
     7400000: Take 001
     9500000: //RootNode
     13700000: bamboo
