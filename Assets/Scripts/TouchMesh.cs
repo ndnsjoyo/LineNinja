@@ -19,18 +19,18 @@ public class TouchMesh : MonoBehaviour
                 touchPosition = value;
             }
         }
-        private Transform _UIobj;
-        public Transform UIobj
-        {
-            get
-            {
-                return _UIobj;
-            }
-            set
-            {
-                _UIobj = value;
-            }
-        }
+        //private Transform _UIobj;
+        //public Transform UIobj
+        //{
+        //    get
+        //    {
+        //        return _UIobj;
+        //    }
+        //    set
+        //    {
+        //        _UIobj = value;
+        //    }
+        //}
         private float mlength;
         public float Length
         {
@@ -47,7 +47,7 @@ public class TouchMesh : MonoBehaviour
         {
 
             touchPosition = pos;
-            _UIobj = obj;
+         //   _UIobj = obj;
             mlength = len;
             //touchPosition =new Vector2();
             // UIobjs = new Transform();
@@ -64,7 +64,7 @@ public class TouchMesh : MonoBehaviour
     private List<TouchMsg> touch = null;
     private void myRemove(int i, List<TouchMsg> t)
     {
-        Destroy(t[i].UIobj.gameObject);
+        //Destroy(t[i].UIobj.gameObject);
         t[i] = null;
         t.RemoveAt(i);
 
@@ -167,6 +167,10 @@ public class TouchMesh : MonoBehaviour
 
     void OnFingerMove(FingerMotionEvent e)
     {
+        LineRendererTest.instance.DrawLine(e.Position);
+
+
+      //  DrawLineTest.instance.lineInfo.Add(e.Position);
         if (index > 0)
         {
             Vector2 dirNow = e.Position - touch[index].TouPosition;
@@ -177,6 +181,9 @@ public class TouchMesh : MonoBehaviour
 
         if (((Vector2)e.Position - touch[index].TouPosition).sqrMagnitude >300)
         {
+
+           
+
             float touchlength = (e.Position - touch[index].TouPosition).magnitude;
 
             print(touchlength);
@@ -197,6 +204,12 @@ public class TouchMesh : MonoBehaviour
         }
     }
     
+
+
+
+
+
+
     bool CanDraw(float f)
     {
         lastLength -= f/100;
@@ -227,7 +240,10 @@ public class TouchMesh : MonoBehaviour
             myRemove(index, touch);
            
             index--;
-            
+
+            LineRendererTest.instance.CancelLine();
+
+
             return true;
         }
       return false;
@@ -445,7 +461,8 @@ public class TouchMesh : MonoBehaviour
 
     void ListClear()
     {
-       
+        LineRendererTest.instance.Clear();
+        // DrawLineTest.instance.lineInfo.Clear();
         bonePosition.Clear();
         // verticles.Clear();
         normals.Clear();
@@ -508,11 +525,11 @@ public class TouchMesh : MonoBehaviour
     }
      
     Transform MyInstiateUIObj(Vector3 pos)
-    {
-        GameObject obj= (GameObject)Instantiate(UIObj, pos, new Quaternion(0, 0, 0, 0));
+   {
+        //GameObject obj= (GameObject)Instantiate(UIObj, pos, new Quaternion(0, 0, 0, 0));
 
-        obj.transform.parent = GameObject.Find("Line").transform;
-        return obj.transform;
+        //obj.transform.parent = GameObject.Find("Line").transform;
+       return null;
 
     }
 
