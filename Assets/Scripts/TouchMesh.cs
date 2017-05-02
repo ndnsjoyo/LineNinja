@@ -150,8 +150,10 @@ public class TouchMesh : MonoBehaviour
 
 
         touch.Add(new TouchMsg(e.Position, MyInstiateUIObj(e.Position), 0));
-       // print(touch.Count);
-       // myRemove(0,touch);
+
+        LineRendererTest.instance.SetAct(e.Position);
+        // print(touch.Count);
+        // myRemove(0,touch);
         // touch.RemoveAt(0);
         //touchPosition.Add((Vector2)e.Position);
         //UIobjs.Add(MyInstiateUIObj(e.Position));
@@ -241,7 +243,7 @@ public class TouchMesh : MonoBehaviour
            
             index--;
 
-            LineRendererTest.instance.CancelLine();
+         //   LineRendererTest.instance.CancelLine();
 
 
             return true;
