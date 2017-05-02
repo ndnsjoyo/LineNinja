@@ -41,9 +41,7 @@ public class PlayerController : MonoBehaviour
     // 各状态设置
     public float runningSpeed = 10.0f;
     public float jumpingHeight = 2.5f;
-    public float jumpingDistance = 7.0f;
-    public float jumpingUpTime = 0.5f;
-    public float jumpingDownTime = 0.5f;
+    public float jumpingDistance = 12.0f;
     public float dashingSpeed = 20.0f;
     public float dashingDistance = 20.0f;
     public int dashingRefreshTimesLimit = 2;
