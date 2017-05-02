@@ -47,11 +47,17 @@ namespace CollisionHandler
         }
 
         // 中断处理后续handler
-        private bool breaked = false;
+        private bool breaked;
         public void Destroy()
         {
             Destroy(managedObject);
             breaked = true;
+        }
+
+        void FixedUpdate()
+        {
+            // 每帧开始重置跳过
+            breaked = false;
         }
 
         void OnCollisionEnter(Collision other)

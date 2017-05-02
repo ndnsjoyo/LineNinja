@@ -11,6 +11,7 @@ namespace PlayerState
             UnityEngine.Debug.Log("开始冲刺");
             player.Speed = player.dashingSpeed;
             _refreshTimesLimit = player.dashingRefreshTimesLimit;
+            player.Animator.SetBool("IsRunning", true);
         }
 
         private float _milometer = 0.0f;
