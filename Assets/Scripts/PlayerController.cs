@@ -59,6 +59,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public Animator _animator;
+    public Animator Animator { get { return _animator; } }
+
     void Start()
     {
         // 获取组件

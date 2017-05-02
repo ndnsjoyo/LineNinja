@@ -20,8 +20,7 @@ namespace CollisionHandler
                 // 用掉刀
                 player.WithKatana = false;
 
-                // 加点特技
-                controller.OnChromatic(1.0f, 0.5f);
+                player.Animator.SetTrigger("DrawSword");
 
                 manager.Destroy();
             }

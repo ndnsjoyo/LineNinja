@@ -10,6 +10,7 @@ namespace PlayerState
         {
             UnityEngine.Debug.Log("开始奔跑");
             player.Speed = player.runningSpeed;
+            player.Animator.SetBool("IsRunning", true);
         }
     }
 }

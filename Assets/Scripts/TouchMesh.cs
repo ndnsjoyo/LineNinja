@@ -188,7 +188,7 @@ public class TouchMesh : MonoBehaviour
 
             float touchlength = (e.Position - touch[index].TouPosition).magnitude;
 
-            print(touchlength);
+         //   print(touchlength);
             //判断线的长度  以及能否继续划线
             if (!CanDraw(touchlength) )return;
 

@@ -20,6 +20,8 @@ namespace PlayerState
             player.transform.position = position;
 
             player.UseGravity = false;
+
+            player.Animator.SetTrigger("Jump");
         }
 
         private float _milometer = 0.0f;
@@ -40,6 +42,8 @@ namespace PlayerState
             player.transform.position = position;
 
             player.UseGravity = true;
+
+            player.Animator.SetTrigger("Jump");
         }
     }
 }
