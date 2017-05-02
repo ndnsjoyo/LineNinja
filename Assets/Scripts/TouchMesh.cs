@@ -329,7 +329,7 @@ public class TouchMesh : MonoBehaviour
         GameObject obj = new GameObject("bone");
         for(int i=0;i<capsulePos.Count;i++)
         {
-            print(lengths[i]);
+           // print(lengths[i]);
             GameObject point=MyInstiateCollider(capsulePos[i], normals[i], lengths[i]);
             point.transform.parent = obj.transform;
         }

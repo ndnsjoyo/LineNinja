@@ -31,6 +31,8 @@ public class LineRendererTest : MonoBehaviour {
 
         circle1 = Instantiate(circle);
         circle2 = Instantiate(circle);
+        circle1.SetActive(false);
+        circle2.SetActive(false);
         //添加LineRenderer组件  
         lineRenderer = gameObject.GetComponent<LineRenderer>();
         //设置材质  
