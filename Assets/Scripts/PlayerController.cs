@@ -54,7 +54,11 @@ public class PlayerController : MonoBehaviour
         set
         {
             if (value) { Debug.Log("装备刀"); }
-            else { Debug.Log("消耗刀"); }
+            else
+            {
+                _animator.SetTrigger("DrawSword");
+                Debug.Log("消耗刀");
+            }
             _withKatana = value;
         }
     }

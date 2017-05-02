@@ -6,11 +6,7 @@ namespace CollisionHandler
 {
     public class Monster : Handler
     {
-        private ImageEffectController controller;
-        public Monster(CollisionHandlerManager manager) : base(manager)
-        {
-            controller = GameObject.Find("_Managers").GetComponent<ImageEffectController>();
-        }
+        public Monster(CollisionHandlerManager manager) : base(manager) { }
 
         public override void OnEnter(PlayerController player)
         {
@@ -19,8 +15,6 @@ namespace CollisionHandler
             {
                 // 用掉刀
                 player.WithKatana = false;
-
-                player.Animator.SetTrigger("DrawSword");
 
                 manager.Destroy();
             }
