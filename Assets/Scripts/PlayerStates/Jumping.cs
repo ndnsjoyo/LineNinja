@@ -7,6 +7,11 @@ namespace PlayerState
 {
     public class Jumping : State
     {
+        static private readonly float upPart = 2.5f;
+        static private readonly float floatingPart = 1f;
+        static private readonly float downPart = 2.5f;
+        static private readonly float totalPart = upPart + floatingPart + downPart;
+
         private float startY;
 
         public Jumping(PlayerController player) : base(player)
@@ -18,7 +23,9 @@ namespace PlayerState
             startY = player.transform.position.y;
 
             player.transform
-                .DOMoveY(startY + player.jumpingHeight, player.jumpingUpTime)
+                .DOMoveY(
+                    startY + player.jumpingHeight,
+                    player.jumpingDistance * upPart / totalPart / player.Speed)
                 .OnStart(() => player.UseGravity = false);
             // Vector3 position = player.transform.position;
             // position.y += height;
@@ -31,7 +38,7 @@ namespace PlayerState
         public override void FixedUpdate()
         {
             _milometer += player.FixedMovedDistance;
-            if (_milometer > player.jumpingDistance)
+            if (_milometer > player.jumpingDistance - player.jumpingDistance * downPart / totalPart)
             {
                 UnityEngine.Debug.Log("落地");
                 player.State.SwitchTo(new Running(player));
@@ -41,7 +48,9 @@ namespace PlayerState
         public override void Exit()
         {
             player.transform
-                .DOMoveY(startY, player.jumpingDownTime)
+                .DOMoveY(
+                    startY,
+                    player.jumpingDistance * downPart / totalPart / player.Speed)
                 .OnComplete(() => player.UseGravity = true);
             // Vector3 position = player.transform.position;
             // position.y -= height;

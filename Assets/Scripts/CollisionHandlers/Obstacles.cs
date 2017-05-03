@@ -5,6 +5,7 @@ namespace CollisionHandler
     public class DashBreakable : Handler
     {
         public DashBreakable(CollisionHandlerManager manager) : base(manager) { }
+
         public override void OnEnter(PlayerController player)
         {
             if (player.State.GetType() == typeof(PlayerState.Dashing))

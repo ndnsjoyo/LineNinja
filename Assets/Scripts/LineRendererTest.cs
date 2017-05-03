@@ -29,10 +29,7 @@ public class LineRendererTest : MonoBehaviour {
     void Start()
     {
 
-        circle1 = Instantiate(circle);
-        circle2 = Instantiate(circle);
-        circle1.SetActive(false);
-        circle2.SetActive(false);
+        //InitCircle();
         //添加LineRenderer组件  
         lineRenderer = gameObject.GetComponent<LineRenderer>();
         //设置材质  
@@ -63,19 +60,32 @@ public class LineRendererTest : MonoBehaviour {
 
 
 
-            if (index == 0) circle1.transform.position = position;
-            circle2.transform.position = position;
+            //if (index == 0)
+            //    PosCircleFix(circle1.transform, position);
+
+            //PosCircleFix(circle2.transform, position);
             lineRenderer.SetPosition(index, position);
+          
             index++;
         }
+       //for(int i=0;i<index;i++)
+       // {
+       //   Vector3 pos=  lineRenderer.GetPosition(i);
 
+       //    lineRenderer.SetPosition(i, Camera.main.ScreenToWorldPoint(pos));
+       // }
+
+          
 
     }
+
+
 
     public void DrawLine(Vector3 pos)
     {
         //将鼠标点击的屏幕坐标转换为世界坐标，然后存储到position中  
-        position = Camera.main.ScreenToWorldPoint(new Vector3(pos.x, pos.y, 1.0f));
+ 
+        position = transform.InverseTransformPoint(Camera.main.ScreenToWorldPoint(new Vector3(pos.x, pos.y, 5f)));
         //端点数+1  
         LengthOfLineRenderer++;
         //设置线段的端点数  
@@ -98,8 +108,8 @@ public class LineRendererTest : MonoBehaviour {
 
     public void Clear()
     {
-        circle1.SetActive(false);
-        circle2.SetActive(false);
+        //circle1.SetActive(false);
+        //circle2.SetActive(false);
 
 
         lineRenderer.SetVertexCount(0);
@@ -108,10 +118,30 @@ public class LineRendererTest : MonoBehaviour {
     }
     public void SetAct(Vector3 pos)
     {
-        circle1.SetActive(true);
-        circle2.SetActive(true);
-        circle1.transform.position = pos;
-        circle2.transform.position = pos;
+        //circle1.SetActive(true);
+        //circle2.SetActive(true);
+        //PosCircleFix(circle1.transform, pos);
+        //PosCircleFix(circle2.transform, pos);
+    }
+
+    void PosCircleFix(Transform tran,Vector3 pos)
+    {
+        tran.position = pos;
+        Vector3 localPos = tran.localPosition;
+        tran.localPosition = new Vector3(localPos.x, localPos.y+1, 1f);
+
+     
+
+
+    }
+    void InitCircle()
+    {
+        circle1 = Instantiate(circle);
+        circle2 = Instantiate(circle);
+        circle1.transform.parent = transform.parent;
+        circle2.transform.parent = transform.parent;
+        circle1.SetActive(false);
+        circle2.SetActive(false);
     }
 
 }
