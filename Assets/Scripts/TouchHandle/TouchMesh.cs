@@ -132,6 +132,7 @@ public class TouchMesh : MonoBehaviour
     }
     void OnEnable()
     {
+       // print(fingerManager);
        fingerManager.UpEvent.OnFingerUp += OnFingerUp;
         fingerManager.downEvent.OnFingerDown += OnFingerDown;
         fingerManager.motionEvent.OnFingerMove += OnFingerMove;
