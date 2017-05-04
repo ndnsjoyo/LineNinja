@@ -7,6 +7,11 @@ namespace CollisionHandler
 {
     public class CollisionHandlerManager : MonoBehaviour
     {
+        //获取每一个碰撞体所包含的竹子
+        public GameObject[] bamboos;
+
+
+
         // 用于放在独立gameobject的探头collider
         // 若不指定则为挂载脚本的gameobject
         public GameObject managedObject;

@@ -31,7 +31,7 @@ namespace PlayerState
             // position.y += height;
             // player.transform.position = position;
 
-            player.Animator.SetTrigger("Jump");
+            player.Animator.SetBool("Jumping", true);
         }
 
         private float _milometer = 0.0f;
@@ -56,7 +56,7 @@ namespace PlayerState
             // position.y -= height;
             // player.transform.position = position;
 
-            player.Animator.SetTrigger("Jump");
+            player.Animator.SetBool("Jumping", false);
         }
     }
 }
