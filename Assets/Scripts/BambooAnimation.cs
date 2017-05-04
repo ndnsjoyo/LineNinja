@@ -5,11 +5,15 @@ using DG.Tweening;
 
 
 public class BambooAnimation : MonoBehaviour {
+
+    public float bornSpeed = 0.3f;
+    public float bornInterval = 0.1f;
+
     public int index = 0;
 	// Use this for initialization
 	void Start () {
         posInit();
-        StartCoroutine(Burn(index));
+        StartCoroutine(Born(index));
 
        
     }
@@ -59,12 +63,12 @@ public class BambooAnimation : MonoBehaviour {
     }
 
 
-    IEnumerator  Burn(int index)
+    IEnumerator  Born(int index)
     {
-        yield return new WaitForSeconds(index * 0.01f);
+        yield return new WaitForSeconds(index * bornInterval);
       
 
-        Tweener tween= transform.DOMoveY(0, 0.1f);
+        Tweener tween= transform.DOMoveY(0, bornSpeed);
         tween.SetEase(Ease.Linear);
     }
 }

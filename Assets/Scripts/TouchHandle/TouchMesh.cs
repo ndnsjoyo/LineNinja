@@ -445,7 +445,7 @@ public class TouchMesh : MonoBehaviour
     {
 
         int i = (int)Random.Range(0, 2);
-        GameObject obj=(GameObject)Instantiate(bamboos[2], pos, new Quaternion(0, 0, 0, 0));
+        GameObject obj=(GameObject)Instantiate(bamboos[i], pos, new Quaternion(0, 0, 0, 0));
 
         obj.transform.localScale = new Vector3(1, 1, 1);
         //obj.transform.localScale = new Vector3( 0.01f, 1,0.01f);
