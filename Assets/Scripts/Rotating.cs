@@ -11,6 +11,6 @@ public class Rotating : MonoBehaviour
     /// </summary>
     void FixedUpdate()
     {
-        transform.Rotate(Vector3.up * rotatingSpeed * Time.fixedDeltaTime);
+        transform.Rotate(Vector3.up * rotatingSpeed * Time.fixedDeltaTime,Space.World);
     }
 }
